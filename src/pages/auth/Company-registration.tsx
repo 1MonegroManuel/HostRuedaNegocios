@@ -41,20 +41,20 @@ const RUBROS = [
 
 const OTRO_VALUE = "__OTRO__";
 
-// Tipo para pasar al siguiente paso
-type CompanyData = {
-    nombre: string;
-    rubro: string;       // puede ser "__OTRO__"
-    rubroOtro?: string;  // texto cuando rubro === "__OTRO__"
-    descripcion: string;
-    intereses: string[];
-    isVirtual: boolean;
-    eventoId: string;
-    nit?: string;
-    telefono?: string;
-    email?: string;
-    sitio_web?: string;
-};
+// Tipo para pasar al siguiente paso (comentado temporalmente)
+// type CompanyData = {
+//     nombre: string;
+//     rubro: string;       // puede ser "__OTRO__"
+//     rubroOtro?: string;  // texto cuando rubro === "__OTRO__"
+//     descripcion: string;
+//     intereses: string[];
+//     isVirtual: boolean;
+//     eventoId: string;
+//     nit?: string;
+//     telefono?: string;
+//     email?: string;
+//     sitio_web?: string;
+// };
 
 export default function CompanyRegistration() {
     const navigate = useNavigate();
@@ -97,7 +97,7 @@ export default function CompanyRegistration() {
 
     const goNext = () => {
         if (!isValid || !selectedEvent) return;
-        
+
         const companyData = {
             nombre,
             rubro,
@@ -114,11 +114,11 @@ export default function CompanyRegistration() {
 
         // Guardamos la info en el contexto y navegamos al siguiente paso
         setCompanyData(companyData);
-        navigate("/company-logo", { 
-            state: { 
+        navigate("/company-logo", {
+            state: {
                 company: companyData,
-                selectedEvent 
-            } 
+                selectedEvent
+            }
         });
     };
 
@@ -347,10 +347,10 @@ export default function CompanyRegistration() {
 
                     {/* Navegación (usa colores del theme + overrides de botones) */}
                     <Stack direction="row" gap={2} sx={{ mt: 1 }}>
-                        <Button 
-                            fullWidth 
-                            variant="contained" 
-                            color="warning" 
+                        <Button
+                            fullWidth
+                            variant="contained"
+                            color="warning"
                             onClick={goBack}
                         >
                             Atrás

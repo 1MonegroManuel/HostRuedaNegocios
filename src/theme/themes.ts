@@ -184,7 +184,7 @@ const theme = createTheme({
         /** ─ Select/Menu ─ **/
         MuiSelect: {
             styleOverrides: {
-                select: ({ theme }) => ({ padding: "14px 16px" }),
+                select: () => ({ padding: "14px 16px" }),
                 icon: ({ theme }) => ({ color: theme.palette.primary.dark }),
             },
         },
@@ -215,7 +215,7 @@ const theme = createTheme({
         /** ─ Chip ─ **/
         MuiChip: {
             styleOverrides: {
-                root: ({ theme }) => ({ fontWeight: 800 }),
+                root: () => ({ fontWeight: 800 }),
             },
             variants: [
                 // Estado: En curso
@@ -248,7 +248,7 @@ const theme = createTheme({
                 // Tag genérico (p. ej. rubro)
                 {
                     props: { variant: "tag" as any, size: "small" },
-                    style: ({ theme }) => ({
+                    style: () => ({
                         backgroundColor: "rgba(251,170,41,0.30)",
                         color: "#5b4a00",
                         height: 22,
@@ -268,7 +268,7 @@ const theme = createTheme({
         /** ─ Bottom navigation ─ **/
         MuiBottomNavigation: {
             styleOverrides: {
-                root: ({ theme }) => ({
+                root: () => ({
                     borderTopLeftRadius: 12,
                     borderTopRightRadius: 12,
                     paddingBottom: "env(safe-area-inset-bottom)",

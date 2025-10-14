@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -38,7 +38,7 @@ export default function EncuestaPopup({
 }: EncuestaPopupProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  
+
   // Estados para los campos de la encuesta
   const [calificacionGeneral, setCalificacionGeneral] = useState<number>(0);
   const [matchNegocio, setMatchNegocio] = useState<number>(0);
@@ -66,7 +66,7 @@ export default function EncuestaPopup({
 
   const handleSubmit = async () => {
     if (!encuestaPendiente) return;
-    
+
     if (calificacionGeneral === 0) {
       setError('La calificación general es obligatoria');
       return;
@@ -98,7 +98,7 @@ export default function EncuestaPopup({
       };
 
       await encuestaService.createEncuesta(encuestaData);
-      
+
       // Limpiar formulario
       setCalificacionGeneral(0);
       setMatchNegocio(0);
@@ -108,7 +108,7 @@ export default function EncuestaPopup({
       setMontoAcordado('');
       setMontoPersonalizado('');
       setComentarios('');
-      
+
       onSuccess();
       onClose();
     } catch (err: any) {
@@ -127,8 +127,8 @@ export default function EncuestaPopup({
   if (!encuestaPendiente) return null;
 
   return (
-    <Dialog 
-      open={open} 
+    <Dialog
+      open={open}
       onClose={handleClose}
       maxWidth="md"
       fullWidth
@@ -286,7 +286,7 @@ export default function EncuestaPopup({
                 ))}
               </Select>
             </FormControl>
-            
+
             {/* Campo para monto personalizado */}
             {montoAcordado === 'otro' && (
               <TextField
@@ -301,7 +301,7 @@ export default function EncuestaPopup({
                 inputProps={{ min: 0, step: 1 }}
               />
             )}
-            
+
             <Typography variant="caption" color="text.secondary" display="block" sx={{ mt: 0.5 }}>
               Indica el monto aproximado en USD que se acordó entre las empresas
             </Typography>
@@ -326,15 +326,15 @@ export default function EncuestaPopup({
       </DialogContent>
 
       <DialogActions sx={{ p: 3, pt: 1 }}>
-        <Button 
-          onClick={handleClose} 
+        <Button
+          onClick={handleClose}
           disabled={loading}
           variant="outlined"
         >
           Cancelar
         </Button>
-        <Button 
-          onClick={handleSubmit} 
+        <Button
+          onClick={handleSubmit}
           disabled={loading || calificacionGeneral === 0}
           variant="contained"
           color="primary"

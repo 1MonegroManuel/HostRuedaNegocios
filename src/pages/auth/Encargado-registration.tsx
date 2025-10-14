@@ -3,7 +3,6 @@ import {
     Box,
     Button,
     Card,
-    CardContent,
     TextField,
     Typography,
     Stack,
@@ -19,7 +18,7 @@ import type { EncargadoData } from "../../hooks/useCompanyRegistrationFlow";
 export default function EncargadoRegistration() {
     const navigate = useNavigate();
     const location = useLocation();
-    const { setEncargadoData, flowState } = useCompanyRegistration();
+    const { setEncargadoData } = useCompanyRegistration();
     const { register } = useAuth();
 
     // Obtener datos del estado de navegación
@@ -74,7 +73,7 @@ export default function EncargadoRegistration() {
             if (result.success && result.user) {
                 // Guardar datos en el contexto
                 setEncargadoData(encargadoData);
-                
+
                 // Navegar al siguiente paso
                 navigate("/personal-registration", {
                     state: {
@@ -196,10 +195,10 @@ export default function EncargadoRegistration() {
 
                     {/* Navegación */}
                     <Stack direction="row" gap={2} sx={{ mt: 1 }}>
-                        <Button 
-                            fullWidth 
-                            variant="contained" 
-                            color="warning" 
+                        <Button
+                            fullWidth
+                            variant="contained"
+                            color="warning"
                             onClick={goBack}
                             disabled={loading}
                         >

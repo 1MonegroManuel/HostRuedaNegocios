@@ -11,7 +11,7 @@ import {
     Chip,
     Divider,
 } from "@mui/material";
-import { 
+import {
     ArrowBackIosNewOutlined,
     CheckCircle,
     Cancel,
@@ -22,7 +22,6 @@ import {
     Assignment,
     Notifications as NotificationsIcon,
     Email,
-    Phone,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -43,7 +42,6 @@ export default function Notifications() {
 
     const isAdmin = hasRole('admin');
     const isEncargado = hasRole('encargado');
-    const isPersonal = hasRole('personal');
 
     useEffect(() => {
         if (user) {
@@ -55,10 +53,10 @@ export default function Notifications() {
         try {
             setLoading(true);
             setError(null);
-            
+
             console.log('🔔 Cargando notificaciones para tab:', activeTab);
             console.log('🔔 Usuario actual:', user);
-            
+
             let response;
             if (activeTab === 'usuario') {
                 console.log('🔔 Llamando a getNotificacionesUsuario');
@@ -67,7 +65,7 @@ export default function Notifications() {
                 console.log('🔔 Llamando a getNotificacionesEmpresa');
                 response = await notificacionService.getNotificacionesEmpresa();
             }
-            
+
             console.log('🔔 Respuesta recibida:', response);
             setNotificaciones(response.data || []);
         } catch (err) {
@@ -77,7 +75,7 @@ export default function Notifications() {
                 status: (err as any)?.status,
                 response: (err as any)?.response
             });
-            
+
             // Manejar diferentes tipos de errores
             const errorMessage = (err as any)?.message || '';
             if (errorMessage.includes('404') || errorMessage.includes('Not Found')) {
@@ -100,9 +98,9 @@ export default function Notifications() {
             try {
                 await notificacionService.marcarComoLeida(notificacion._id);
                 // Actualizar el estado local
-                setNotificaciones(prev => 
-                    prev.map(n => 
-                        n._id === notificacion._id 
+                setNotificaciones(prev =>
+                    prev.map(n =>
+                        n._id === notificacion._id
                             ? { ...n, estado: 'leida' as const }
                             : n
                     )
@@ -244,7 +242,7 @@ export default function Notifications() {
                         variant={activeTab === 'usuario' ? 'filled' : 'outlined'}
                         color={activeTab === 'usuario' ? 'primary' : 'default'}
                         onClick={() => setActiveTab('usuario')}
-                        sx={{ 
+                        sx={{
                             fontWeight: activeTab === 'usuario' ? 600 : 400,
                             '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.1) }
                         }}
@@ -255,7 +253,7 @@ export default function Notifications() {
                             variant={activeTab === 'empresa' ? 'filled' : 'outlined'}
                             color={activeTab === 'empresa' ? 'primary' : 'default'}
                             onClick={() => setActiveTab('empresa')}
-                            sx={{ 
+                            sx={{
                                 fontWeight: activeTab === 'empresa' ? 600 : 400,
                                 '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.1) }
                             }}
@@ -292,7 +290,7 @@ export default function Notifications() {
                                     elevation={0}
                                     sx={{
                                         borderRadius: theme.custom.radii.card,
-                                        backgroundColor: notificacion.estado === 'leida' 
+                                        backgroundColor: notificacion.estado === 'leida'
                                             ? alpha(theme.palette.primary.main, 0.08)
                                             : alpha(theme.palette.primary.main, 0.14),
                                         border: `1px solid ${alpha(theme.palette.primary.main, 0.28)}`,
@@ -308,19 +306,19 @@ export default function Notifications() {
                                             <Box sx={{ mt: 0.5 }}>
                                                 {getNotificationIcon(notificacion.tipo)}
                                             </Box>
-                                            
+
                                             {/* Contenido principal */}
                                             <Box sx={{ flex: 1 }}>
                                                 <Stack direction="row" justifyContent="space-between" alignItems="flex-start" sx={{ mb: 0.5 }}>
-                                                    <Typography sx={{ 
-                                                        fontWeight: notificacion.estado === 'leida' ? 500 : 700, 
-                                                        color: "#000", 
+                                                    <Typography sx={{
+                                                        fontWeight: notificacion.estado === 'leida' ? 500 : 700,
+                                                        color: "#000",
                                                         lineHeight: 1.25,
                                                         fontSize: '0.95rem'
                                                     }}>
                                                         {notificacion.titulo}
                                                     </Typography>
-                                                    
+
                                                     {/* Estado y canal */}
                                                     <Stack direction="row" spacing={0.5} alignItems="center">
                                                         {getCanalIcon(notificacion.canal)}
@@ -333,20 +331,20 @@ export default function Notifications() {
                                                         />
                                                     </Stack>
                                                 </Stack>
-                                                
-                                                <Typography variant="body2" sx={{ 
+
+                                                <Typography variant="body2" sx={{
                                                     color: "text.primary",
                                                     lineHeight: 1.4,
                                                     mb: 1
                                                 }}>
                                                     {notificacion.mensaje}
                                                 </Typography>
-                                                
+
                                                 {/* Información adicional del payload */}
                                                 {notificacion.payload && (
                                                     <Box sx={{ mb: 1 }}>
                                                         {notificacion.payload.empresaObjetivo && (
-                                                            <Typography variant="caption" sx={{ 
+                                                            <Typography variant="caption" sx={{
                                                                 color: "text.secondary",
                                                                 display: 'block',
                                                                 fontWeight: 500
@@ -355,7 +353,7 @@ export default function Notifications() {
                                                             </Typography>
                                                         )}
                                                         {notificacion.payload.fechaReunion && (
-                                                            <Typography variant="caption" sx={{ 
+                                                            <Typography variant="caption" sx={{
                                                                 color: "text.secondary",
                                                                 display: 'block'
                                                             }}>
@@ -363,7 +361,7 @@ export default function Notifications() {
                                                             </Typography>
                                                         )}
                                                         {notificacion.payload.tipoReunion && (
-                                                            <Typography variant="caption" sx={{ 
+                                                            <Typography variant="caption" sx={{
                                                                 color: "text.secondary",
                                                                 display: 'block'
                                                             }}>
@@ -372,15 +370,15 @@ export default function Notifications() {
                                                         )}
                                                     </Box>
                                                 )}
-                                                
-                                                <Typography variant="caption" sx={{ 
+
+                                                <Typography variant="caption" sx={{
                                                     color: "text.secondary",
                                                     display: 'block'
                                                 }}>
                                                     {new Date(notificacion.creada_en).toLocaleString()}
                                                 </Typography>
                                             </Box>
-                                            
+
                                             {/* Indicador de no leída */}
                                             {notificacion.estado !== 'leida' && (
                                                 <Box
@@ -396,7 +394,7 @@ export default function Notifications() {
                                         </Stack>
                                     </CardActionArea>
                                 </Card>
-                                
+
                                 {/* Divider entre notificaciones */}
                                 {index < notificaciones.length - 1 && (
                                     <Divider sx={{ opacity: 0.3 }} />

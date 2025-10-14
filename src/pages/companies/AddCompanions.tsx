@@ -83,19 +83,19 @@ export default function AddCompanions() {
         return;
       }
 
-      // Obtener información de la empresa del encargado
-      let empresaInfo = { id: null, nombre: 'Empresa' };
-      try {
-        const empresa = await empresaService.getEmpresaByEncargado(user._id);
-        empresaInfo = { id: empresa._id, nombre: empresa.nombre };
-      } catch (error) {
-        console.warn('No se pudo obtener información de la empresa:', error);
-      }
+      // Obtener información de la empresa del encargado (comentado temporalmente)
+      // let empresaInfo = { id: null as string | null, nombre: 'Empresa' };
+      // try {
+      //   const empresa = await empresaService.getEmpresaByEncargado(user._id);
+      //   empresaInfo = { id: empresa._id, nombre: empresa.nombre };
+      // } catch (error) {
+      //   console.warn('No se pudo obtener información de la empresa:', error);
+      // }
 
       // Crear empleados en el backend
       const createdEmployeeIds = [];
       const errors = [];
-      
+
       for (const companion of companions) {
         try {
           console.log(`Creating employee: ${companion.nombre} ${companion.apellido} (${companion.email})`);
@@ -104,8 +104,6 @@ export default function AddCompanions() {
             apellido: companion.apellido,
             email: companion.email,
             telefono: companion.telefono || null,
-            empresaId: empresaInfo.id,
-            empresaNombre: empresaInfo.nombre
           });
           createdEmployeeIds.push(result.user._id);
           console.log(`✅ Employee created: ${result.user._id}`);
@@ -118,25 +116,25 @@ export default function AddCompanions() {
           });
         }
       }
-      
+
       if (errors.length > 0) {
         const errorMessage = errors.map(e => `${e.nombre} (${e.email}): ${e.error}`).join('\n');
         alert(`Algunos empleados no pudieron ser creados:\n\n${errorMessage}\n\nLos empleados creados exitosamente se guardarán.`);
       }
-      
+
       if (createdEmployeeIds.length > 0) {
         // Obtener la empresa del encargado
         const empresa = await empresaService.getEmpresaByEncargado(user._id);
-        
+
         // Actualizar la empresa con los IDs de los empleados creados
         const updatedPersonalIds = [...(empresa.personalIds || []), ...createdEmployeeIds];
-        
+
         await empresaService.updateEmpresa(empresa._id, {
           personalIds: updatedPersonalIds
         });
-        
+
         console.log(`✅ Updated empresa ${empresa._id} with ${createdEmployeeIds.length} new employees`);
-        
+
         // Guardar en sessionStorage para el flujo de registro (si es necesario)
         sessionStorage.setItem("wizard_companions", JSON.stringify(createdEmployeeIds));
         navigate(-1);
@@ -212,43 +210,43 @@ export default function AddCompanions() {
         {/* Lista de acompañantes */}
         {companions.length > 0 && (
           <Stack spacing={1.5} sx={{ mt: 3 }}>
-      <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-        Empleados añadidos
-      </Typography>
+            <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+              Empleados añadidos
+            </Typography>
             {companions.map((c, i) => (
-<Card
-  key={`${c.email}-${i}`}
-  sx={{
-    border: `1px solid ${theme.palette.info.main}`,
-    borderRadius: theme.custom.radii.field,
-    px: 1.5,
-    py: 1.5,
-    backgroundColor: "#fff",
-  }}
->
-  <Stack direction="row" justifyContent="space-between" alignItems="center">
-    <Stack spacing={0.5}>
-      <Typography variant="body2" fontWeight={700}>
-        Nombre: {c.nombre} {c.apellido}
-      </Typography>
-      <Typography variant="body2">
-        Correo: {c.email}
-      </Typography>
-      <Typography variant="body2">
-        Teléfono: {c.telefono || 'No especificado'}
-      </Typography>
-    </Stack>
+              <Card
+                key={`${c.email}-${i}`}
+                sx={{
+                  border: `1px solid ${theme.palette.info.main}`,
+                  borderRadius: theme.custom.radii.field,
+                  px: 1.5,
+                  py: 1.5,
+                  backgroundColor: "#fff",
+                }}
+              >
+                <Stack direction="row" justifyContent="space-between" alignItems="center">
+                  <Stack spacing={0.5}>
+                    <Typography variant="body2" fontWeight={700}>
+                      Nombre: {c.nombre} {c.apellido}
+                    </Typography>
+                    <Typography variant="body2">
+                      Correo: {c.email}
+                    </Typography>
+                    <Typography variant="body2">
+                      Teléfono: {c.telefono || 'No especificado'}
+                    </Typography>
+                  </Stack>
 
-    <Stack direction="row" spacing={1}>
-      <IconButton aria-label="Editar" color="info" onClick={() => editCompanion(i)}>
-        <Edit />
-      </IconButton>
-      <IconButton aria-label="Eliminar" color="error" onClick={() => removeCompanion(i)}>
-        <Delete />
-      </IconButton>
-    </Stack>
-  </Stack>
-</Card>
+                  <Stack direction="row" spacing={1}>
+                    <IconButton aria-label="Editar" color="info" onClick={() => editCompanion(i)}>
+                      <Edit />
+                    </IconButton>
+                    <IconButton aria-label="Eliminar" color="error" onClick={() => removeCompanion(i)}>
+                      <Delete />
+                    </IconButton>
+                  </Stack>
+                </Stack>
+              </Card>
             ))}
           </Stack>
         )}
