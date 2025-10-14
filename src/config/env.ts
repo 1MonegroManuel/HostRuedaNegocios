@@ -23,7 +23,7 @@ const schema = z.object({
   DB_NAME: z.string().default('rueda_negocios'),
 
   // CORS / límites
-  ALLOWED_ORIGINS: z.string().default('http://localhost:3000,https://rueda-negocios-frontend.onrender.com'),
+  ALLOWED_ORIGINS: z.string().default('http://localhost:3000,https://hostruedanegocios.onrender.com,https://tu-frontend-en-render.com'),
   RATE_LIMIT_WINDOW_MS: z.coerce.number().default(15 * 60 * 1000),
   RATE_LIMIT_MAX: z.coerce.number().default(100),
 

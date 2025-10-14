@@ -12,6 +12,8 @@ const defaultAllowed = [
   'http://127.0.0.1:5174',
   'http://127.0.0.1:5175',
   'http://127.0.0.1:5176',
+  'https://hostruedanegocios.onrender.com',
+  'https://tu-frontend-en-render.com',
   'file://'
 ];
 
