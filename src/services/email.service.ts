@@ -1,4 +1,3 @@
-import nodemailer from 'nodemailer';
 import { env } from '../config/env';
 
 interface EmailOptions {
@@ -9,46 +8,51 @@ interface EmailOptions {
 }
 
 class EmailService {
-  private transporter: nodemailer.Transporter | null = null;
+  private resendApiKey: string | null = null;
 
   constructor() {
-    this.initializeTransporter();
+    this.initializeResend();
   }
 
-  private initializeTransporter() {
-    if (env.GMAIL_USER && env.GMAIL_APP_PASSWORD) {
-      this.transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: env.GMAIL_USER,
-          pass: env.GMAIL_APP_PASSWORD, // App Password, no la contraseña normal
-        },
-      });
-
-      console.log('📧 Gmail transporter configurado correctamente');
+  private initializeResend() {
+    if (env.RESEND_API_KEY) {
+      this.resendApiKey = env.RESEND_API_KEY;
+      console.log('📧 Resend configurado correctamente');
     } else {
-      console.log('⚠️  Gmail no configurado. Las notificaciones por email estarán deshabilitadas.');
+      console.log('⚠️  Resend no configurado. Las notificaciones por email estarán deshabilitadas.');
     }
   }
 
   async sendEmail(options: EmailOptions): Promise<boolean> {
-    if (!this.transporter) {
-      console.log('⚠️  No se puede enviar email: Gmail no configurado');
+    if (!this.resendApiKey) {
+      console.log('⚠️  No se puede enviar email: Resend no configurado');
       return false;
     }
 
     try {
-      const mailOptions = {
-        from: `"Rueda de Negocios" <${env.GMAIL_USER}>`,
-        to: options.to,
-        subject: options.subject,
-        html: options.html,
-        text: options.text,
-      };
+      const response = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.resendApiKey}`,
+        },
+        body: JSON.stringify({
+          from: 'Rueda de Negocios <noreply@ruedanegociosbeni.com>',
+          to: [options.to],
+          subject: options.subject,
+          html: options.html,
+          text: options.text,
+        }),
+      });
 
-      const result = await this.transporter.sendMail(mailOptions);
-      console.log(`✅ Email enviado exitosamente a ${options.to}:`, result.messageId);
-      return true;
+      if (response.ok) {
+        const result = await response.json();
+        console.log(`✅ Email enviado exitosamente a ${options.to}:`, result.id);
+        return true;
+      } else {
+        console.error('❌ Error enviando email:', await response.text());
+        return false;
+      }
     } catch (error) {
       console.error('❌ Error enviando email:', error);
       return false;

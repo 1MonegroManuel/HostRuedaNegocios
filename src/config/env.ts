@@ -26,7 +26,8 @@ const schema = z.object({
   CLOUDINARY_FOLDER: z.string().default(''),
   UPLOAD_MAX_FILE_MB: z.coerce.number().default(10),
 
-  // Gmail/Email (opcionales)
+  // Email/Resend (opcionales)
+  RESEND_API_KEY: z.string().default(''),
   GMAIL_USER: z.string().default(''),
   GMAIL_APP_PASSWORD: z.string().default(''),
 });

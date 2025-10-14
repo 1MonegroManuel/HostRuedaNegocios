@@ -1,0 +1,12 @@
+# Variables MÍNIMAS para Render - Solo las obligatorias
+# ==================================================
+
+NODE_ENV=production
+PORT=3001
+JWT_SECRET=tu-jwt-secret-super-seguro-minimo-32-caracteres
+MONGODB_URI=mongodb+srv://usuario:password@cluster.mongodb.net/rueda-negocios
+ALLOWED_ORIGINS=https://tu-frontend-en-render.com
+
+# ==================================================
+# Solo necesitas estas 5 variables para que funcione
+# ==================================================

@@ -1,0 +1,51 @@
+# ===== CONFIGURACIÓN BÁSICA =====
+NODE_ENV=production
+PORT=3001
+
+# ===== BASE DE DATOS =====
+MONGODB_URI=mongodb+srv://Admin:admin123@ruedanegocios.urzdhtv.mongodb.net/?retryWrites=true&w=majority&appName=RuedaNegocios
+DB_NAME=rueda_negocios
+
+# ===== CORS Y SEGURIDAD =====
+ALLOWED_ORIGINS=https://tu-frontend-en-render.com,http://localhost:3000
+RATE_LIMIT_WINDOW_MS=900000
+RATE_LIMIT_MAX=10000
+
+# ===== JWT AUTHENTICATION =====
+JWT_SECRET=mi_jwt_secret_super_seguro_para_rueda_negocios_2024
+JWT_EXPIRES_IN=15m
+JWT_REFRESH_EXPIRES_IN=7d
+
+# ===== EMAIL CONFIGURATION =====
+# Resend (Servicio principal de email - funciona perfecto en Render)
+RESEND_API_KEY=re_7pR6d4PK_5WbKGJBSJbf5eZLoKpsHPJcB
+
+# EmailJS (Para frontend - NO se usa en backend)
+# EMAILJS_SERVICE_ID=service_mp1om1p
+# EMAILJS_TEMPLATE_ID=template_q70lbpb
+# EMAILJS_PUBLIC_KEY=TpN5xx1_R9Qp663u3
+
+# Gmail (Fallback - opcional)
+GMAIL_USER=ruedanegociosbeni@gmail.com
+GMAIL_APP_PASSWORD=pqsq rhei hjmx nhtm
+
+# SendGrid (Fallback - opcional)
+SENDGRID_API_KEY=
+SENDGRID_FROM_EMAIL=noreply@ruedanegociosbeni.com
+
+# ===== CLOUDINARY (Almacenamiento de archivos) =====
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
+CLOUDINARY_FOLDER=rueda_negocios
+
+# ===== UPLOAD =====
+UPLOAD_MAX_FILE_MB=10
+
+# ================================================================
+# INSTRUCCIONES:
+# 1. Copia estas variables a Render Dashboard
+# 2. Actualiza ALLOWED_ORIGINS con tu dominio de frontend real
+# 3. EmailJS se usa solo en el frontend (no en backend)
+# 4. Resend es el servicio principal de email para el backend
+# ================================================================
