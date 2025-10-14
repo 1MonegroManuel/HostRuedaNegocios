@@ -6,7 +6,7 @@ const schema = z.object({
   PORT: z.coerce.number().default(3001),
 
   // App/JWT
-  JWT_SECRET: z.string().min(16, 'JWT_SECRET debe tener al menos 16 caracteres'),
+  JWT_SECRET: z.string().min(16, 'JWT_SECRET debe tener al menos 16 caracteres').default('default-jwt-secret-for-development-only-change-in-production'),
   JWT_EXPIRES_IN: z.string().default('15m'),
   JWT_REFRESH_EXPIRES_IN: z.string().default('7d'),
 

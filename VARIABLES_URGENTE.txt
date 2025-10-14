@@ -1,0 +1,20 @@
+# 🔥 VARIABLES URGENTES PARA RENDER - SOLO LAS OBLIGATORIAS
+# =========================================================
+
+# ✅ ESTAS SON LAS MÍNIMAS NECESARIAS PARA QUE FUNCIONE
+NODE_ENV=production
+PORT=3001
+JWT_SECRET=mi_jwt_secret_super_seguro_para_rueda_negocios_2024_minimo_32_caracteres
+MONGODB_URI=mongodb+srv://Admin:admin123@ruedanegocios.urzdhtv.mongodb.net/?retryWrites=true&w=majority&appName=RuedaNegocios
+
+# 🌐 CORS (IMPORTANTE - Actualizar con tu dominio real)
+ALLOWED_ORIGINS=https://tu-frontend-en-render.com,http://localhost:3000
+
+# =========================================================
+# INSTRUCCIONES URGENTES:
+# 1. Ve a Render Dashboard
+# 2. Ve a Environment Variables
+# 3. Copia SOLO estas 5 variables
+# 4. Actualiza ALLOWED_ORIGINS con tu dominio real
+# 5. Deploy nuevamente
+# =========================================================
