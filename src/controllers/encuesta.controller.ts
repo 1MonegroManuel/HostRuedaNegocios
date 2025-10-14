@@ -159,9 +159,9 @@ export async function eliminarEncuestaCtrl(req: Request, res: Response) {
 export async function verificarEncuestasPendientesCtrl(req: Request, res: Response) {
   try {
     const { empresaId } = z.object({ empresaId: objectId }).parse(req.params);
-    
+
     console.log(`🔍 Verificando encuestas pendientes para empresa: ${empresaId}`);
-    
+
     // Obtener todas las solicitudes de reunión aceptadas donde participa la empresa
     const solicitudes = await SolicitudReunion.find({
       $or: [
@@ -170,9 +170,9 @@ export async function verificarEncuestasPendientesCtrl(req: Request, res: Respon
       ],
       estado: 'aceptada'
     })
-    .populate('empresaSolicitaId', 'nombre')
-    .populate('empresaObjetivoId', 'nombre')
-    .lean();
+      .populate('empresaSolicitaId', 'nombre')
+      .populate('empresaObjetivoId', 'nombre')
+      .lean();
 
     console.log(`📋 Solicitudes encontradas: ${solicitudes.length}`);
 
@@ -182,19 +182,19 @@ export async function verificarEncuestasPendientesCtrl(req: Request, res: Respon
       // Verificar si la reunión ya finalizó (fecha de fin pasada)
       const fechaFin = solicitud.finPropuesto;
       const fechaInicio = solicitud.inicioPropuesto;
-      
+
       if (!fechaInicio || !fechaFin) {
         continue; // No hay fechas definidas
       }
-      
+
       const now = new Date();
       const startTime = new Date(fechaInicio);
       const endTime = new Date(fechaFin);
-      
+
       // Solo considerar reuniones que ya finalizaron (estado "completed")
       const reunionFinalizada = now > endTime;
       console.log(`📅 Solicitud ${solicitud._id}: Inicio: ${startTime.toISOString()}, Fin: ${endTime.toISOString()}, Finalizada: ${reunionFinalizada}`);
-      
+
       if (!reunionFinalizada) {
         continue; // La reunión aún no ha finalizado
       }
@@ -204,29 +204,34 @@ export async function verificarEncuestasPendientesCtrl(req: Request, res: Respon
         solicitudReunionId: solicitud._id,
         empresaId: empresaId
       }).lean();
-      
+
       console.log(`📝 Encuesta existente para ${solicitud._id}: ${encuestaExistente ? 'SÍ' : 'NO'}`);
 
       if (!encuestaExistente) {
-        // Determinar la empresa contraparte
-        const empresaContraparte = String(solicitud.empresaSolicitaId) === String(empresaId) 
-          ? solicitud.empresaObjetivoId 
+        // Determinar el ID de la empresa contraparte
+        const empresaContraparteId = String(solicitud.empresaSolicitaId) === String(empresaId)
+          ? solicitud.empresaObjetivoId
           : solicitud.empresaSolicitaId;
 
-        encuestasPendientes.push({
-          solicitudReunionId: solicitud._id,
-          eventoId: solicitud.eventoId,
-          empresaContraparte: {
-            _id: empresaContraparte._id,
-            nombre: empresaContraparte.nombre
-          },
-          fechaReunion: solicitud.inicioPropuesto,
-          fechaFin: solicitud.finPropuesto,
-          tipoReunion: solicitud.tipoReunion,
-          mensaje: solicitud.mensaje
-        });
-        
-        console.log(`✅ Encuesta pendiente agregada para reunión con: ${empresaContraparte.nombre}`);
+        // Obtener información completa de la empresa contraparte
+        const empresaContraparte = await Empresa.findById(empresaContraparteId).lean();
+
+        if (empresaContraparte) {
+          encuestasPendientes.push({
+            solicitudReunionId: solicitud._id,
+            eventoId: solicitud.eventoId,
+            empresaContraparte: {
+              _id: empresaContraparte._id,
+              nombre: empresaContraparte.nombre
+            },
+            fechaReunion: solicitud.inicioPropuesto,
+            fechaFin: solicitud.finPropuesto,
+            tipoReunion: solicitud.tipoReunion,
+            mensaje: solicitud.mensaje
+          });
+
+          console.log(`✅ Encuesta pendiente agregada para reunión con: ${empresaContraparte.nombre}`);
+        }
       }
     }
 
@@ -247,13 +252,13 @@ export async function verificarEncuestasPendientesCtrl(req: Request, res: Respon
 export async function verificarEncuestaCompletaCtrl(req: Request, res: Response) {
   try {
     const { solicitudReunionId } = z.object({ solicitudReunionId: objectId }).parse(req.params);
-    
+
     // Obtener la solicitud de reunión
     const solicitud = await SolicitudReunion.findById(solicitudReunionId)
       .populate('empresaSolicitaId', 'nombre')
       .populate('empresaObjetivoId', 'nombre')
       .lean();
-    
+
     if (!solicitud) {
       return res.status(404).json({ error: 'NOT_FOUND' });
     }
@@ -267,8 +272,8 @@ export async function verificarEncuestaCompletaCtrl(req: Request, res: Response)
     const empresaSolicitanteId = String(solicitud.empresaSolicitaId);
     const empresaObjetivoId = String(solicitud.empresaObjetivoId);
 
-    const ambasCompletaron = empresasConEncuesta.includes(empresaSolicitanteId) && 
-                            empresasConEncuesta.includes(empresaObjetivoId);
+    const ambasCompletaron = empresasConEncuesta.includes(empresaSolicitanteId) &&
+      empresasConEncuesta.includes(empresaObjetivoId);
 
     res.json({
       solicitudReunionId,

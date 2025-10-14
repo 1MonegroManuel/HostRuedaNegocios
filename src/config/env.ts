@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 // Solo lo realmente crítico obligatorio:
 const schema = z.object({
-  NODE_ENV: z.enum(['development','test','production']).default('development'),
+  NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   PORT: z.coerce.number().default(3001),
 
   // App/JWT
@@ -15,7 +15,7 @@ const schema = z.object({
   DB_NAME: z.string().default('test_db'),
 
   // CORS / límites
-  ALLOWED_ORIGINS: z.string().default('http://localhost:3000'),
+  ALLOWED_ORIGINS: z.string().default('http://localhost:3000,https://rueda-negocios-frontend.onrender.com'),
   RATE_LIMIT_WINDOW_MS: z.coerce.number().default(15 * 60 * 1000),
   RATE_LIMIT_MAX: z.coerce.number().default(100),
 

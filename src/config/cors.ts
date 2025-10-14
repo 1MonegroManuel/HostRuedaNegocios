@@ -1,8 +1,19 @@
 import cors from 'cors';
 import { env } from './env';
 
-const envAllowed = env.ALLOWED_ORIGINS.split(',').map(s=>s.trim()).filter(Boolean);
-const defaultAllowed = ['http://localhost:3000','http://localhost:5173','http://localhost:5174','http://localhost:5175','http://localhost:5176','http://127.0.0.1:5173','http://127.0.0.1:5174','http://127.0.0.1:5175','http://127.0.0.1:5176','file://'];
+const envAllowed = env.ALLOWED_ORIGINS.split(',').map(s => s.trim()).filter(Boolean);
+const defaultAllowed = [
+  'http://localhost:3000',
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'http://localhost:5175',
+  'http://localhost:5176',
+  'http://127.0.0.1:5173',
+  'http://127.0.0.1:5174',
+  'http://127.0.0.1:5175',
+  'http://127.0.0.1:5176',
+  'file://'
+];
 
 function isAllowed(origin?: string) {
   if (!origin) return true;
@@ -14,8 +25,8 @@ function isAllowed(origin?: string) {
 
 export const corsMiddleware = cors({
   origin: (origin, cb) => isAllowed(origin || undefined) ? cb(null, true) : cb(new Error('Not allowed by CORS')),
-  methods: ['GET','HEAD','POST','PUT','PATCH','DELETE','OPTIONS'],
-  allowedHeaders: ['Content-Type','Authorization','Cache-Control','Pragma','Expires'],
+  methods: ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Cache-Control', 'Pragma', 'Expires'],
   credentials: false,
   optionsSuccessStatus: 204
 });
