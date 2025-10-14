@@ -1,7 +1,7 @@
 import type { ApiResponse, PaginatedResponse } from './types';
 
 // Configuración base de la API
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://hostruedanegocios.onrender.com/api';
 
 // Clase para manejar las peticiones HTTP
 class ApiClient {
@@ -75,7 +75,7 @@ class ApiClient {
   // Manejar respuesta paginada
   private async handlePaginatedResponse<T>(response: Response): Promise<PaginatedResponse<T>> {
     const data = await response.json();
-    
+
     console.log('🌐 API Response Data:', data);
 
     if (!response.ok) {
@@ -93,7 +93,7 @@ class ApiClient {
   // Método GET
   async get<T>(endpoint: string, params?: Record<string, any>): Promise<ApiResponse<T>> {
     const url = new URL(`${this.baseURL}${endpoint}`);
-    
+
     if (params) {
       Object.keys(params).forEach(key => {
         if (params[key] !== undefined && params[key] !== null) {
@@ -113,7 +113,7 @@ class ApiClient {
   // Método GET para respuestas paginadas
   async getPaginated<T>(endpoint: string, params?: Record<string, any>): Promise<PaginatedResponse<T>> {
     const url = new URL(`${this.baseURL}${endpoint}`);
-    
+
     if (params) {
       Object.keys(params).forEach(key => {
         if (params[key] !== undefined && params[key] !== null) {
@@ -183,7 +183,7 @@ class ApiClient {
   async uploadFile<T>(endpoint: string, file: File, additionalData?: Record<string, any>): Promise<ApiResponse<T>> {
     const formData = new FormData();
     formData.append('file', file);
-    
+
     if (additionalData) {
       Object.keys(additionalData).forEach(key => {
         formData.append(key, additionalData[key]);
@@ -213,11 +213,11 @@ export const handleApiError = (error: any): string => {
   if (error instanceof Error) {
     return error.message;
   }
-  
+
   if (typeof error === 'string') {
     return error;
   }
-  
+
   return 'Error desconocido en la API';
 };
 

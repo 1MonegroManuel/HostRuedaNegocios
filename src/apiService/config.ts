@@ -1,23 +1,23 @@
 // Configuración de la API
 export const API_CONFIG = {
   // URL base de la API
-  BASE_URL: import.meta.env.VITE_API_URL || 'http://localhost:3001/api',
-  
+  BASE_URL: import.meta.env.VITE_API_URL || 'https://hostruedanegocios.onrender.com/api',
+
   // Timeouts
   TIMEOUT: 30000, // 30 segundos
-  
+
   // Configuración de paginación por defecto
   DEFAULT_PAGE_SIZE: 10,
   MAX_PAGE_SIZE: 100,
-  
+
   // Configuración de reintentos
   MAX_RETRIES: 3,
   RETRY_DELAY: 1000, // 1 segundo
-  
+
   // Configuración de cache
   CACHE_ENABLED: true,
   CACHE_TTL: 5 * 60 * 1000, // 5 minutos
-  
+
   // Configuración de archivos
   MAX_FILE_SIZE: 10 * 1024 * 1024, // 10MB
   ALLOWED_FILE_TYPES: [
@@ -30,13 +30,13 @@ export const API_CONFIG = {
     'text/csv',
     'application/json'
   ],
-  
+
   // Configuración de notificaciones
   NOTIFICATION_POLLING_INTERVAL: 30000, // 30 segundos
-  
+
   // Configuración de autenticación
   TOKEN_REFRESH_THRESHOLD: 5 * 60 * 1000, // 5 minutos antes del vencimiento
-  
+
   // Configuración de logs
   LOG_LEVEL: import.meta.env.VITE_LOG_LEVEL || 'info',
   LOG_REQUESTS: import.meta.env.VITE_LOG_REQUESTS === 'true',
