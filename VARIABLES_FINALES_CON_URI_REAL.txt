@@ -1,0 +1,23 @@
+# 🎉 VARIABLES FINALES - Con tu URI Real de MongoDB
+
+# ✅ OBLIGATORIA (Solo esta):
+NODE_ENV=production
+
+# 🎯 OPCIONALES (Todas tienen defaults correctos):
+PORT=3001
+ALLOWED_ORIGINS=https://tu-frontend-en-render.com,http://localhost:3000
+RESEND_API_KEY=re_7pR6d4PK_5WbKGJBSJbf5eZLoKpsHPJcB
+
+# =========================================================
+# CONFIGURACIÓN AUTOMÁTICA CON TU URI REAL:
+# - MONGODB_URI: mongodb+srv://jg012119:cEfOpibMb2iFfrCs@cluster0.oyerk.mongodb.net/
+# - JWT_SECRET: Secret seguro (auto-configurado en producción)  
+# - DB_NAME: rueda_negocios (auto-configurado)
+# =========================================================
+
+# INSTRUCCIONES:
+# 1. Solo agrega NODE_ENV=production en Render
+# 2. Todas las demás variables son opcionales
+# 3. Deploy y funcionará automáticamente
+# 4. Tu URI de MongoDB ya está configurada
+# =========================================================

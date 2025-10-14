@@ -17,7 +17,7 @@ const schema = z.object({
   // DB: en test no conectaremos a esto, pero tu schema puede exigir string; da default dummy
   MONGODB_URI: z.string().min(1).default(
     process.env.NODE_ENV === 'production'
-      ? 'mongodb+srv://Admin:admin123@ruedanegocios.urzdhtv.mongodb.net/?retryWrites=true&w=majority&appName=RuedaNegocios'
+      ? 'mongodb+srv://jg012119:cEfOpibMb2iFfrCs@cluster0.oyerk.mongodb.net/?retryWrites=true&w=majority'
       : 'mongodb://dummy/fake-tests'
   ),
   DB_NAME: z.string().default('rueda_negocios'),
