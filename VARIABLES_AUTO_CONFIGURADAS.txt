@@ -1,0 +1,22 @@
+# 🎉 VARIABLES AUTO-CONFIGURADAS - Solo lo mínimo necesario
+
+# ✅ OBLIGATORIA (Solo esta):
+NODE_ENV=production
+
+# 🎯 OPCIONALES (Todas tienen defaults correctos):
+PORT=3001
+ALLOWED_ORIGINS=https://tu-frontend-en-render.com,http://localhost:3000
+RESEND_API_KEY=re_7pR6d4PK_5WbKGJBSJbf5eZLoKpsHPJcB
+
+# =========================================================
+# CONFIGURACIÓN AUTOMÁTICA:
+# - MONGODB_URI: Tu URI real (auto-configurada en producción)
+# - JWT_SECRET: Secret seguro (auto-configurado en producción)  
+# - DB_NAME: rueda_negocios (auto-configurado)
+# =========================================================
+
+# INSTRUCCIONES:
+# 1. Solo agrega NODE_ENV=production en Render
+# 2. Todas las demás variables son opcionales
+# 3. Deploy y funcionará automáticamente
+# =========================================================

@@ -6,13 +6,21 @@ const schema = z.object({
   PORT: z.coerce.number().default(3001),
 
   // App/JWT
-  JWT_SECRET: z.string().min(16, 'JWT_SECRET debe tener al menos 16 caracteres').default('default-jwt-secret-for-development-only-change-in-production'),
+  JWT_SECRET: z.string().min(16, 'JWT_SECRET debe tener al menos 16 caracteres').default(
+    process.env.NODE_ENV === 'production'
+      ? 'mi_jwt_secret_super_seguro_para_rueda_negocios_2024_minimo_32_caracteres'
+      : 'default-jwt-secret-for-development-only'
+  ),
   JWT_EXPIRES_IN: z.string().default('15m'),
   JWT_REFRESH_EXPIRES_IN: z.string().default('7d'),
 
   // DB: en test no conectaremos a esto, pero tu schema puede exigir string; da default dummy
-  MONGODB_URI: z.string().min(1).default('mongodb://dummy/fake-tests'),
-  DB_NAME: z.string().default('test_db'),
+  MONGODB_URI: z.string().min(1).default(
+    process.env.NODE_ENV === 'production'
+      ? 'mongodb+srv://Admin:admin123@ruedanegocios.urzdhtv.mongodb.net/?retryWrites=true&w=majority&appName=RuedaNegocios'
+      : 'mongodb://dummy/fake-tests'
+  ),
+  DB_NAME: z.string().default('rueda_negocios'),
 
   // CORS / límites
   ALLOWED_ORIGINS: z.string().default('http://localhost:3000,https://rueda-negocios-frontend.onrender.com'),
